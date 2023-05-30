@@ -1,0 +1,6 @@
+1, Pradeep, 45
+2, Surya, 60
+3, Ajit, 55
+4, Mary, 64
+5, Radha, 56
+6, Sanskarti, 100
