@@ -38,7 +38,8 @@ public class PatientRecord {
         }
     }
     public void outputCurrentPatientList(String filename) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+        String path = "C:\\Users\\I527299\\Documents\\" + filename;
+        try (PrintWriter writer = new PrintWriter(new FileWriter(path))) {
             for (Patient patient : patientList) {
                 writer.println(patient.getPatientId() + ", " + patient.getName() + ", " + patient.getAge());
             }
