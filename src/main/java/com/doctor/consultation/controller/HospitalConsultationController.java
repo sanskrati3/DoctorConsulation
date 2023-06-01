@@ -21,7 +21,7 @@ public class HospitalConsultationController {
         String name = view.readStringInput("Enter patient name:");
         int age = view.readIntegerInput("Enter patient age:");
         int patientId = patientRecord.registerPatient(name, age);
-        consultQueue.enqueuePatient(patientId);
+        consultQueue.enqueuePatient(age);
         view.displayMessage("Patient \"" + name + "\" added to the queue, current position is " + consultQueue.getSize());
     }
 
@@ -59,12 +59,20 @@ public class HospitalConsultationController {
         if (consultQueue.isEmpty()) {
             view.displayMessage("No patients in the queue.");
         } else {
-            int patientId = consultQueue.peek();
-            Patient patient = getPatientById(patientId);
+            int age = consultQueue.peek();
+            Patient patient = getPatientByAge(age);
             view.displayMessage("Next patient for consultation is: " + patient.getName());
         }
     }
 
+    private Patient getPatientByAge(int age) {
+        for (Patient patient : patientRecord.getPatientList()) {
+            if (patient.getAge() == age) {
+                return patient;
+            }
+        }
+        return null;
+    }
     private Patient getPatientById(int patientId) {
         for (Patient patient : patientRecord.getPatientList()) {
             if (patient.getPatientId() == patientId) {
@@ -82,3 +90,4 @@ public class HospitalConsultationController {
 
 
 }
+
