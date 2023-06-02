@@ -20,19 +20,25 @@ public class HospitalConsultationController {
     public void addNewPatient() {
         String name = view.readStringInput("Enter patient name:");
         int age = view.readIntegerInput("Enter patient age:");
-        int patientId = patientRecord.registerPatient(name, age);
-        consultQueue.enqueuePatient(age);
-        view.displayMessage("Patient \"" + name + "\" added to the queue, current position is " + consultQueue.getSize());
+            if(age<=0)
+            {
+                view.displayMessage("patient age cannot be less then 0");
+            }
+        else {
+                int patientId = patientRecord.registerPatient(name, age, consultQueue);
+                consultQueue.enqueuePatient(age);
+                view.displayMessage("Patient \"" + name + "\" added to the queue, current position is " + consultQueue.getSize());
+            }
     }
 
     public void run() {
         view.displayMenu();
         int option = view.readIntegerInput("Enter an option:");
 
-        while (option != 5) {
+        while (option !=6) {
             switch (option) {
                 case 1:
-                    patientRecord.importPatientsFromFile("input.txt");
+                    patientRecord.importPatientsFromFile("input.txt",consultQueue);
                     view.displayMessage("Imported " + patientRecord.getPatientList().size() + " patients from file.");
                     break;
                 case 2:
@@ -45,6 +51,10 @@ public class HospitalConsultationController {
                     patientRecord.outputCurrentPatientList("output.txt");
                     view.displayMessage("Consultation queue output to file successfully.");
                     break;
+                case 5:
+                    patientRecord.clearImportedData("output.txt");
+                    break;
+
                 default:
                     view.displayMessage("Invalid option. Please try again.");
                     break;
@@ -62,6 +72,7 @@ public class HospitalConsultationController {
             int age = consultQueue.peek();
             Patient patient = getPatientByAge(age);
             view.displayMessage("Next patient for consultation is: " + patient.getName());
+            consultQueue.dequeuePatient();
         }
     }
 
@@ -87,7 +98,6 @@ public class HospitalConsultationController {
         controller.addNewPatient();
         controller.getNextPatient();
     }
-
 
 }
 

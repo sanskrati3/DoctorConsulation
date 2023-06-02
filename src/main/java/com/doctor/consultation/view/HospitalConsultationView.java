@@ -2,8 +2,10 @@ package com.doctor.consultation.view;
 
 import java.util.Scanner;
 
+
 public class HospitalConsultationView {
     private Scanner scanner;
+
 
     public HospitalConsultationView() {
         scanner = new Scanner(System.in);

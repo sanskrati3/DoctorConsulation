@@ -1,25 +1,28 @@
 package com.doctor.consultation.model;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
+
 
 public class PatientRecord {
     private List<Patient> patientList;
 
+
     public PatientRecord() {
         patientList = new ArrayList<>();
+
     }
 
-    public int registerPatient(String name, int age) {
+    public int registerPatient(String name, int age,ConsultQueue consultQueue) {
         int patientId = patientList.size() + 1;
         Patient patient = new Patient(name, age, patientId);
         patientList.add(patient);
+        consultQueue.enqueuePatient(age);
         return patientId;
     }
-    public void importPatientsFromFile(String filename) {
+    public void importPatientsFromFile(String filename,ConsultQueue consultQueue) {
         try {
-            String path = "C:\\Users\\I527299\\Documents\\" + filename;
+            String path = "C:\\Users\\I527260\\Desktop\\" + filename;
             File file = new File(path);
             Scanner scanner = new Scanner(file);
 
@@ -28,8 +31,7 @@ public class PatientRecord {
                 String[] data = line.split(", ");
                 String name = data[0];
                 int age = Integer.parseInt(data[1]);
-
-                registerPatient(name, age);
+                registerPatient(name, age, consultQueue);
             }
 
             scanner.close();
@@ -38,7 +40,7 @@ public class PatientRecord {
         }
     }
     public void outputCurrentPatientList(String filename) {
-        String path = "C:\\Users\\I527299\\Documents\\" + filename;
+        String path = "C:\\Users\\I527260\\Desktop\\" + filename;
         try (PrintWriter writer = new PrintWriter(new FileWriter(path))) {
             for (Patient patient : patientList) {
                 writer.println(patient.getPatientId() + ", " + patient.getName() + ", " + patient.getAge());
@@ -49,8 +51,21 @@ public class PatientRecord {
         }
     }
 
+    public void clearImportedData(String filename)
+    {
+        String path = "C:\\Users\\I527260\\Desktop\\" + filename;
+        try {
+            FileWriter fileWriter = new FileWriter(path);
+            fileWriter.write(""); // Write an empty string to clear the file
+            fileWriter.close();
+            System.out.println("Records cleared successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while clearing the records: " + e.getMessage());
+        }
+
+    }
+
     public List<Patient> getPatientList() {
         return patientList;
     }
-
 }

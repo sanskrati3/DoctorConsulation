@@ -23,4 +23,13 @@ public class Patient {
         return patientId;
     }
 
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", patientId=" + patientId +
+                '}';
+    }
+
 }
