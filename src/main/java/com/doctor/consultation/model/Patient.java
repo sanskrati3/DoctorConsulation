@@ -10,7 +10,6 @@ public class Patient {
         this.age = age;
         this.patientId = patientId;
     }
-
     public String getName() {
         return name;
     }
@@ -22,6 +21,7 @@ public class Patient {
     public int getPatientId() {
         return patientId;
     }
+
 
     @Override
     public String toString() {

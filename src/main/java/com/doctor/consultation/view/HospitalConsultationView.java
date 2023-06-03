@@ -38,7 +38,4 @@ public class HospitalConsultationView {
     public void displayMessage(String message) {
         System.out.println(message);
     }
-
-
-
 }

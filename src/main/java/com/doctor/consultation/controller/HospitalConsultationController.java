@@ -15,20 +15,20 @@ public class HospitalConsultationController {
         patientRecord = new PatientRecord();
         consultQueue = new ConsultQueue(100);
         view = new HospitalConsultationView();
+
     }
 
     public void addNewPatient() {
         String name = view.readStringInput("Enter patient name:");
         int age = view.readIntegerInput("Enter patient age:");
-            if(age<=0)
-            {
-                view.displayMessage("patient age cannot be less then 0");
-            }
+        if(age<=0)
+        {
+            view.displayMessage("patient age cannot be less then 0");
+        }
         else {
-                int patientId = patientRecord.registerPatient(name, age, consultQueue);
-                consultQueue.enqueuePatient(age);
-                view.displayMessage("Patient \"" + name + "\" added to the queue, current position is " + consultQueue.getSize());
-            }
+            int patientId = patientRecord.registerPatient(name, age, consultQueue);
+            view.displayMessage("Patient \"" + name + "\" added to the queue, current position is " + consultQueue.getSize());
+        }
     }
 
     public void run() {
@@ -49,7 +49,6 @@ public class HospitalConsultationController {
                     break;
                 case 4:
                     patientRecord.outputCurrentPatientList("output.txt");
-                    view.displayMessage("Consultation queue output to file successfully.");
                     break;
                 case 5:
                     patientRecord.clearImportedData("output.txt");
@@ -65,16 +64,24 @@ public class HospitalConsultationController {
         }
     }
 
+
+
+
     public void getNextPatient() {
         if (consultQueue.isEmpty()) {
             view.displayMessage("No patients in the queue.");
         } else {
             int age = consultQueue.peek();
             Patient patient = getPatientByAge(age);
+
             view.displayMessage("Next patient for consultation is: " + patient.getName());
             consultQueue.dequeuePatient();
+
         }
     }
+
+
+
 
     private Patient getPatientByAge(int age) {
         for (Patient patient : patientRecord.getPatientList()) {
@@ -98,6 +105,7 @@ public class HospitalConsultationController {
         controller.addNewPatient();
         controller.getNextPatient();
     }
+
 
 }
 
